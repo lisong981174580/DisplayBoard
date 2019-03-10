@@ -1,0 +1,584 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.leftTop {
+  width: 100%;
+  height: 54%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: url(../images/leftTop.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 30;
+}
+.rightBottom {
+  width: 53.59%;
+  height: 26%;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  background: url(../images/rightBottom.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 30;
+}
+.banner {
+  width: 62.5%;
+  height: 85%;
+  position: fixed;
+  top: 7%;
+  left: 18.75%;
+  background: url(../images/banner.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 1000;
+}
+@keyframes enterArrow {
+  0% {
+    left: 17.5%;
+  }
+  10% {
+    left: 18.5%;
+  }
+  20% {
+    left: 19.5%;
+  }
+  30% {
+    left: 20.5%;
+  }
+  40% {
+    left: 19.5%;
+  }
+  50% {
+    left: 18.5%;
+  }
+  60% {
+    left: 17.5%;
+  }
+  70% {
+    left: 16.5%;
+  }
+  80% {
+    left: 16%;
+  }
+  90% {
+    left: 15.5%;
+  }
+  100% {
+    left: 15%;
+  }
+}
+.banner .enterArrow {
+  width: 4.83%;
+  height: 3.2%;
+  background: url(../images/enterArrow.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 17.5%;
+  top: 45.3%;
+  z-index: 2000;
+}
+@keyframes outArrow {
+  0% {
+    left: 17.5%;
+  }
+  10% {
+    left: 16.5%;
+  }
+  20% {
+    left: 15.5%;
+  }
+  30% {
+    left: 14.5%;
+  }
+  40% {
+    left: 13.5%;
+  }
+  50% {
+    left: 14.5%;
+  }
+  60% {
+    left: 15.5%;
+  }
+  70% {
+    left: 17%;
+  }
+  80% {
+    left: 18%;
+  }
+  90% {
+    left: 19%;
+  }
+  100% {
+    left: 21%;
+  }
+}
+.banner .outArrow {
+  width: 4.83%;
+  height: 3.2%;
+  background: url(../images/outArrow.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 17.5%;
+  top: 15.1%;
+  z-index: 2000;
+}
+@keyframes outArrow2 {
+  0% {
+    left: 36%;
+  }
+  10% {
+    left: 35%;
+  }
+  20% {
+    left: 34%;
+  }
+  30% {
+    left: 33%;
+  }
+  40% {
+    left: 32%;
+  }
+  50% {
+    left: 33%;
+  }
+  60% {
+    left: 34%;
+  }
+  70% {
+    left: 35%;
+  }
+  80% {
+    left: 36%;
+  }
+  90% {
+    left: 37%;
+  }
+  100% {
+    left: 38%;
+  }
+}
+.banner .outArrow2 {
+  width: 4.83%;
+  height: 3.2%;
+  background: url(../images/outArrow.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 36%;
+  top: 15.1%;
+  z-index: 2000;
+}
+@keyframes outArrow3 {
+  0% {
+    top: 40%;
+  }
+  10% {
+    top: 39%;
+  }
+  20% {
+    top: 38%;
+  }
+  30% {
+    top: 37%;
+  }
+  40% {
+    top: 36%;
+  }
+  50% {
+    top: 37%;
+  }
+  60% {
+    top: 38%;
+  }
+  70% {
+    top: 39%;
+  }
+  80% {
+    top: 40%;
+  }
+  90% {
+    top: 41%;
+  }
+  100% {
+    top: 42%;
+  }
+}
+.banner .outArrow3_box {
+  width: 9.66%;
+  height: 3.2%;
+  position: absolute;
+  left: 58%;
+  top: 40%;
+  z-index: 2000;
+  transform: rotate(90deg);
+}
+.banner .outArrow3_box .outArrow3 {
+  width: 50%;
+  height: 100%;
+  background: url(../images/outArrow.png) no-repeat center center;
+  background-size: 100% 100%;
+  opacity: 0;
+}
+.banner .outArrow3_box .outArrow4 {
+  width: 50%;
+  height: 100%;
+  background: url(../images/outArrow.png) no-repeat center center;
+  background-size: 100% 100%;
+}
+.pipe {
+  width: 32.3%;
+  height: 47.2%;
+  position: fixed;
+  top: 26.8%;
+  left: 28.3%;
+  background: url(../images/pipe.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 700;
+}
+.pipe-dibu {
+  width: 32.3%;
+  height: 47.2%;
+  position: fixed;
+  top: 26.8%;
+  left: 28.3%;
+  background: url(../images/pipe.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 600;
+}
+.pumpLeft {
+  width: 4.5%;
+  height: 8%;
+  position: fixed;
+  top: 70.9%;
+  left: 47.18%;
+  background: url(../images/pump.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 800;
+}
+.pumpRight {
+  width: 4.5%;
+  height: 8%;
+  position: fixed;
+  top: 70.9%;
+  left: 57.6%;
+  background: url(../images/pump.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 800;
+}
+@keyframes enter {
+  0% {
+    background-image: url(../images/enter/01.png);
+  }
+  20% {
+    background-image: url(../images/enter/02.png);
+  }
+  40% {
+    background-image: url(../images/enter/03.png);
+  }
+  60% {
+    background-image: url(../images/enter/04.png);
+  }
+  80% {
+    background-image: url(../images/enter/03.png);
+  }
+  100% {
+    background-image: url(../images/enter/02.png);
+  }
+}
+.enter {
+  width: 13.59%;
+  height: 39%;
+  position: fixed;
+  top: 42.2%;
+  left: 35%;
+  background: url(../images/enter.png) no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 300;
+}
+.container {
+  width: 36.4%;
+  height: 46.2%;
+  position: fixed;
+  top: 34.75%;
+  left: 36.5%;
+  overflow: hidden;
+  z-index: 900;
+}
+@keyframes ripple {
+  0% {
+    background-image: url(../images/ripple/1.png);
+  }
+  10% {
+    background-image: url(../images/ripple/1.png);
+  }
+  20% {
+    background-image: url(../images/ripple/2.png);
+  }
+  30% {
+    background-image: url(../images/ripple/3.png);
+  }
+  40% {
+    background-image: url(../images/ripple/4.png);
+  }
+  50% {
+    background-image: url(../images/ripple/5.png);
+  }
+  60% {
+    background-image: url(../images/ripple/6.png);
+  }
+  70% {
+    background-image: url(../images/ripple/7.png);
+  }
+  80% {
+    background-image: url(../images/ripple/8.png);
+  }
+  90% {
+    background-image: url(../images/ripple/9.png);
+  }
+  100% {
+    background-image: url(../images/ripple/10.png);
+  }
+}
+.container .ripple {
+  width: 100%;
+  height: 13.3%;
+  background: url(../images/ripple_1.png) no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  animation: ripple 2s infinite linear;
+}
+.container .water_box {
+  width: 100%;
+  height: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.container .water_box .out {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #7bccfa;
+  opacity: 0.5;
+  z-index: 91;
+}
+.container .water_box .inner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #7bccfa;
+  opacity: 0.5;
+  z-index: 92;
+}
+@keyframes maskBox {
+  0% {
+    background-image: url(../images/ripple/1.png);
+  }
+  10% {
+    background-image: url(../images/ripple/1.png);
+  }
+  20% {
+    background-image: url(../images/ripple/2.png);
+  }
+  30% {
+    background-image: url(../images/ripple/3.png);
+  }
+  40% {
+    background-image: url(../images/ripple/4.png);
+  }
+  50% {
+    background-image: url(../images/ripple/5.png);
+  }
+  60% {
+    background-image: url(../images/ripple/6.png);
+  }
+  70% {
+    background-image: url(../images/ripple/7.png);
+  }
+  80% {
+    background-image: url(../images/ripple/8.png);
+  }
+  90% {
+    background-image: url(../images/ripple/9.png);
+  }
+  100% {
+    background-image: url(../images/ripple/10.png);
+  }
+}
+.maskBox {
+  width: 36.4%;
+  height: 45.2%;
+  position: fixed;
+  top: 35.74%;
+  left: 36.5%;
+  z-index: 400;
+}
+.maskBox .mask {
+  width: 100%;
+  height: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+}
+.Notice_box {
+  width: 12.39%;
+  height: 16.388%;
+  position: absolute;
+  left: 81.25%;
+  /*1560px*/
+  top: 29.44%;
+  /*318px*/
+  opacity: 0;
+}
+@keyframes Notice {
+  0% {
+    background-image: url(../images/Notice/01.png);
+  }
+  14.28% {
+    background-image: url(../images/Notice/02.png);
+  }
+  28.56% {
+    background-image: url(../images/Notice/03.png);
+  }
+  42.84% {
+    background-image: url(../images/Notice/04.png);
+  }
+  57.12% {
+    background-image: url(../images/Notice/05.png);
+  }
+  71.4% {
+    background-image: url(../images/Notice/06.png);
+  }
+  85.68% {
+    background-image: url(../images/Notice/07.png);
+  }
+  100% {
+    background-image: url(../images/Notice/08.png);
+  }
+}
+.Notice_box .Notice {
+  width: 36%;
+  height: 43.5%;
+  animation: Notice 1s infinite linear ;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 0;
+}
+.Notice_box .Notice_tex {
+  width: 100%;
+  height: 18.86%;
+  line-height: 100%;
+  position: absolute;
+  left: 0 ;
+  right: 0;
+  margin: 0 auto;
+  top: 54%;
+  text-align: center;
+  color: #fc0802;
+}
+@keyframes state {
+  0% {
+    background-image: url(../images/arrow/01.png);
+  }
+  16.666% {
+    background-image: url(../images/arrow/02.png);
+  }
+  33.332% {
+    background-image: url(../images/arrow/03.png);
+  }
+  49.998% {
+    background-image: url(../images/arrow/04.png);
+  }
+  66.664% {
+    background-image: url(../images/arrow/05.png);
+  }
+  83.33% {
+    background-image: url(../images/arrow/06.png);
+  }
+  100% {
+    background-image: url(../images/arrow/07.png);
+  }
+}
+.zhu_state_box {
+  width: 6.61%;
+  /*127*/
+  height: 8.33%;
+  /*90*/
+  position: fixed;
+  z-index: 2000;
+  display: none;
+  left: 43.43%;
+  top: 83.4%;
+}
+.zhu_state_box .state {
+  width: 56.69% ;
+  height: 53.33%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 6.67%;
+  animation: state 0.7s infinite linear ;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  transform: rotate(-45deg);
+}
+.zhu_state_box .state_text {
+  width: 100%;
+  height: 26.66%;
+  line-height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: left;
+  color: #fc0802;
+}
+.bei_state_box {
+  width: 6.61%;
+  /*127*/
+  height: 8.33%;
+  /*90*/
+  position: fixed;
+  z-index: 2000;
+  display: none;
+  left: 53.63%;
+  top: 83.4%;
+}
+.bei_state_box .state {
+  width: 56.69% ;
+  height: 53.33%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 6.67%;
+  animation: state 0.7s infinite linear ;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  transform: rotate(-45deg);
+}
+.bei_state_box .state_text {
+  width: 100%;
+  height: 26.66%;
+  line-height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: left;
+  color: #fc0802;
+}

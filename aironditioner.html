@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>空调机演示板</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/air.css">
+</head>
+<body>
+<div class="leftTop"></div>
+<div class="rightBottom"></div>
+<div class="title"></div>
+<div class="state">
+  <div class="yuan"></div>
+  <div class="tite_text"></div>
+</div>
+
+<div class="air_container">
+
+    <div class="banner">
+        <div class="banner_hidden"></div>
+        <div class="pipe"></div>
+        <div class="pipe2"></div>
+        <div class="fan_wheel"></div>
+
+        <div class="new_box">
+            <div class="new_arrow"></div>
+            <div class="font text1  tem_font">
+                新风温度<span class="newfan_tem  change" ></span>
+            </div>
+            <div class="font text2">
+                新风开度<span class="fan_flag  change" ></span>
+            </div>
+        </div>
+
+        <div class="give_box">
+            <div class="give_arrow"></div>
+            <div class="font text1 ">
+                送风<span class="ce">温度</span> <span class="enterFan_tem  ce  change"  ></span>
+            </div>
+        </div>
+
+
+        <div class="returnFan_box">
+            <div class="returnFan_arrow"></div>
+            <div class="font text1 ">
+                回风<span class="ce">温度</span><span class="returnAir_tem ce  change" ></span>
+            </div>
+        </div>
+
+
+        <div class="enterwater_box">
+            <div class="enterwater_arrow"></div>
+            <div class="font text1 ce">
+                进水<span class="ce">温度</span><span class="enterWater_tem ce  change" ></span>
+            </div>
+            <div class="font text2  ">
+                进水<span class="">速度</span><span class="sudu   change" ></span>
+            </div>
+        </div>
+
+
+        <div class="out_box">
+            <div class="font text1">排水</div>
+            <div class="outwater_arrow"></div>
+        </div>
+
+
+
+        <div class="electric_box">
+            <div class="font text1">
+                风机电流 <span class="fan_electric  change" ></span>
+            </div>
+        </div>
+
+
+
+        <div class="Filter_box">
+            <div class="font text1 ">
+                滤网风压差<span class="Filter_difference ce  change" ></span>
+            </div>
+        </div>
+
+        <div class="falg_box">
+            <div class="falg_top"></div>
+            <div class="falg_bottom"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var air_container=document.querySelector('.air_container');
+    air_container.style.height=(air_container.offsetWidth*0.5625)+'px';
+
+    var fan_wheel=document.querySelector('.fan_wheel');//风轮
+    fan_wheel.style.height=fan_wheel.offsetWidth+'px';
+
+    var new_box=document.querySelector('.new_box');
+    var font=document.querySelectorAll('.font');
+    for(var i=0;i<font.length;i++){
+        font[i].style.fontSize=(new_box.offsetHeight*0.23)+'px';
+    }
+    var ce=document.querySelectorAll('.ce');
+    for(var i=0;i<ce.length;i++){
+        ce[i].style.opacity=0;
+    }
+
+    var fan_electric=document.querySelector('.fan_electric');//风机电流
+    var returnAir_tem=document.querySelector('.returnAir_tem');//回风温度
+    var enterWater_tem=document.querySelector('.enterWater_tem');//进水温度
+    var Filter_difference=document.querySelector('.Filter_difference');//滤网液压差
+    var enterFan_tem=document.querySelector('.enterFan_tem');//送风温度
+    var fan_flag=document.querySelector('.fan_flag');//新风开度
+    var newfan_tem=document.querySelector('.newfan_tem');//新风温度
+    var enter_sudu=document.querySelector('.sudu');//进水速度
+
+    var banner=document.querySelector('.banner');//背景容器
+    var banner_hidden=document.querySelector('.banner_hidden');//风阀开度0时 背景
+    var pipe=document.querySelector('.pipe');//水管
+    var tem_font=document.querySelector('.tem_font');//新风温度描述
+
+
+    var falg_box=document.querySelector('.falg_box');//风阀箱子
+    var falg_top=document.querySelector('.falg_top');//风阀上
+    var falg_bottom=document.querySelector('.falg_bottom');//风阀下
+
+    var height=falg_box.offsetHeight;
+
+    var new_arrow=document.querySelector('.new_arrow');
+    var give_arrow=document.querySelector('.give_arrow');
+    var returnFan_arrow=document.querySelector('.returnFan_arrow');
+    var enterwater_arrow=document.querySelector('.enterwater_arrow');
+    var outwater_arrow=document.querySelector('.outwater_arrow');
+    var D=100;
+
+    var tite_text=document.querySelector('.tite_text');
+    function airBoxDetail(json1) {
+        var json=JSON.parse(json1);
+        var data = json.data;
+        for(var i=0;i<data.length;i++){
+            switch (data[i].port) {
+                case 2101:
+                    /*风机电流*/
+                    if( fan_electric.innerHTML!==(data[i].value+'A')){
+                        fan_electric.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        fan_electric.innerHTML = data[i].value+'A';
+                        fan_electric.style.color='#f83d83';
+                        fan_electric.style.transition='all 1s';
+                        setTimeout(function () {
+                            fan_electric.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            fan_electric.style.color='#000';
+                        },1000)
+                    };
+                    break;
+                case 2102:
+                    /*回风温度*/
+                    if(returnAir_tem.innerHTML!==(data[i].value+'℃')){
+                        returnAir_tem.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        returnAir_tem.innerHTML = data[i].value+'℃';
+                        returnAir_tem.style.color='#fa9728';
+                        returnAir_tem.style.transition='all 1s';
+
+
+                        setTimeout(function () {
+                            returnAir_tem.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            returnAir_tem.style.color='#000';
+                        },1000)
+                    };
+                    break;
+                case 2103:
+                    /*进水温度*/
+                    if(enterWater_tem.innerHTML!==(data[i].value+'℃')){
+                        enterWater_tem.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        enterWater_tem.innerHTML = data[i].value+'℃';
+                        enterWater_tem.style.color='#2196ff';
+                        enterWater_tem.style.transition='all 1s';
+                        setTimeout(function () {
+                            enterWater_tem.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            enterWater_tem.style.color='#000';
+                        },1000)
+                    }
+                    break;
+                case 2105:
+                    /*滤网液压差*/
+                    if(Filter_difference.innerHTML!==(data[i].value+'Pa')){
+                        Filter_difference.innerHTML = data[i].value+'Pa';
+                    };
+                    break;
+                case 2111:
+                    /*送风温度*/
+                    if((enterFan_tem.innerHTML!==(data[i].value+'℃'))){
+                        enterFan_tem.innerHTML = data[i].value+'℃';
+                        enterFan_tem.style.color='#206eff';
+                        enterFan_tem.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        enterFan_tem.style.transition='all 1s';
+                        setTimeout(function () {
+                            enterFan_tem.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            enterFan_tem.style.color='#000';
+                        },1000)
+                    };
+                    break;
+                case 2201:
+                    /*新风开度*/
+                    if (data[i].value > 0) {
+                        new_arrow.style.opacity = 1;
+                        tem_font.style.opacity = 1;
+                        banner_hidden.style.opacity = 0;
+
+                    } else {
+                        banner_hidden.style.opacity = 1;
+                        new_arrow.style.opacity = 0;
+                        tem_font.style.opacity = 0;
+
+                    };
+                    D = Number(1 - data[i].value * 0.01);
+                    falg_top.style.height = height * D * 0.5 + 'px';
+                    falg_bottom.style.height = height * D * 0.5 + 'px';
+
+                    if(fan_flag.innerHTML!==(data[i].value+'℃')){
+                        fan_flag.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        fan_flag.innerHTML = data[i].value+'℃';
+                        fan_flag.style.color='#0fc543';
+                        fan_flag.style.transition='all 1s';
+                        setTimeout(function () {
+                            fan_flag.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            fan_flag.style.color='#000';
+                        },1000)
+                    };
+                    break;
+                case 2108:
+                    /*新风温度*/
+                    if(newfan_tem.innerHTML!==(data[i].value+'℃')){
+                        newfan_tem.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        newfan_tem.innerHTML = data[i].value+'℃';
+                        newfan_tem.style.color='#fa2222';
+                        newfan_tem.style.transition='all 1s';
+                        setTimeout(function () {
+                            newfan_tem.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            newfan_tem.style.color='#000';
+                        },1000)
+                    };
+                    break;
+                case 2203:
+                    /*风机转速*/
+                    if (data[i].value > 0) {
+                        banner.style.backgroundImage = 'url(images_air/dong_banner.gif) ';
+                        var v = Number(1.1 - (data[i].value * 0.01));
+
+                        fan_wheel.style.animationName = 'fan_wheel';
+                        fan_wheel.style.animationDuration = v + 's';
+                        fan_wheel.style.animationTimingFunction = 'linear';
+                        fan_wheel.style.animationIterationCount = 'infinite';
+
+
+                        new_arrow.style.animation = 'new_arrow 1s infinite ease';
+                        give_arrow.style.animation = 'give_arrow 1s infinite  ease';
+                        returnFan_arrow.style.animation = 'returnFan_arrow 1s infinite ease';
+
+
+                    } else {
+                        banner.style.backgroundImage = 'url(images_air/banner.png) ';
+                        banner_hidden.style.opacity = 0;
+                        fan_wheel.style.animation = 'none';
+
+                        new_arrow.style.animation = 'none';
+                        give_arrow.style.animation = 'none';
+                        returnFan_arrow.style.animation = 'none';
+                    };
+                    break;
+                case 2202:
+                    /*水阀开度*/
+                    if (data[i].value > 0) {
+                        var v = Number(5.1 - (data[i].value * 0.05));
+
+                        pipe.style.animationName = 'pipe';
+                        pipe.style.animationDuration = v + 's';
+                        pipe.style.animationTimingFunction = 'linear';
+                        pipe.style.animationIterationCount = 'infinite';
+
+
+                        enterwater_arrow.style.animation = 'enterwater_arrow 1s infinite ease';
+                        outwater_arrow.style.animation = 'outwater_arrow 1s infinite ease';
+
+                    } else {
+                        pipe.style.animation = 'none';
+                        enterwater_arrow.style.animation = 'none';
+                        outwater_arrow.style.animation = 'none';
+                    };
+
+                    if(enter_sudu.innerHTML!==(data[i].value+'%')){
+                        enter_sudu.style.fontSize=(new_box.offsetHeight*0.23*1.5)+'px';
+                        enter_sudu.innerHTML = data[i].value+'%';
+                        enter_sudu.style.color='#0fc543';
+                        enter_sudu.style.transition='all 1s';
+                        setTimeout(function () {
+                            enter_sudu.style.fontSize=(new_box.offsetHeight*0.23)+'px';
+                            enter_sudu.style.color='#000';
+                        },1000)
+                    };
+                    break;
+                case 2401:
+                    if (data[i].value == 1) {
+                        for (var j = 0; j < ce.length; j++) {
+                            ce[j].style.opacity = 1;
+                        }
+                    } else {
+                        for (var j = 0; j < ce.length; j++) {
+                            ce[j].style.opacity = 0;
+                        }
+                    };
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        }
+
+    }
+
+
+    function condition(data) {
+        if(data=='2'){
+            tite_text.innerHTML='春秋季演示';
+        }else if(data=='1'){
+            tite_text.innerHTML='夏季演示';
+        }
+
+    }
+
+</script>
+<script>
+
+    var data={
+
+        "date": "2017-10-14 18:04:11",
+        "data": [
+            {"value": "1000","port": 2101},
+            {"value": "2000","port": 2102},
+            {"value": "2103","port": 2103},
+            {"port":2104,"value":"2104"},
+            {"port":2105,"value":"4006"},
+            {"port":2106,"value":"1000"},
+            {"port":2107,"value":"2107"},
+            {"port":2108,"value":"4003"},
+            {"port":2110,"value":"2103"},
+            {"port":2111,"value":"2103"},
+            {"port":2201,"value":"100"},
+            {"port":2202,"value":"100"},
+            {"port":2203,"value":"100"},
+            {"port":2401,"value":"1"},
+        ]                                                                                          }
+    var data2={
+
+        "date": "2017-10-14 18:04:11",
+        "data": [
+            {"value": "1001","port": 2101},
+            {"value": "2001","port": 2102},
+            {"value": "2104","port": 2103},
+            {"port":2104,"value":"3002"},
+            {"port":2105,"value":"4000"},
+            {"port":2106,"value":"2106"},
+            {"port":2107,"value":"2108"},
+            {"port":2108,"value":"4002"},
+            {"port":2110,"value":"2102"},
+            {"port":2111,"value":"2102"},
+            {"port":2201,"value":"100"},
+            {"port":2202,"value":"100"},
+            {"port":2203,"value":"100"},
+            {"port":2401,"value":"0"},
+        ]                                                                                          }
+    var data3={
+
+        "date": "2017-10-14 18:04:11",
+        "data": [
+            {"value": "1001","port": 2101},
+            {"value": "2002","port": 2102},
+            {"value": "2105","port": 2103},
+            {"port":2104,"value":"3001"},
+            {"port":2105,"value":"4001"},
+            {"port":2106,"value":"2107"},
+            {"port":2107,"value":"2109"},
+            {"port":2108,"value":"4001"},
+            {"port":2110,"value":"2101"},
+            {"port":2111,"value":"2101"},
+            {"port":2201,"value":"0"},
+            {"port":2202,"value":"100"},
+            {"port":2203,"value":"100"},
+            {"port":2401,"value":"1"},
+        ]                                                                                          }
+    var data4={
+
+        "date": "2017-10-14 18:04:11",
+        "data": [
+            {"value": "1004","port": 2101},
+            {"value": "2002","port": 2102},
+            {"value": "2105","port": 2103},
+            {"port":2104,"value":"3000"},
+            {"port":2105,"value":"4002"},
+            {"port":2106,"value":"2108"},
+            {"port":2107,"value":"2130"},
+            {"port":2108,"value":"4000"},
+            {"port":2110,"value":"2100"},
+            {"port":2111,"value":"2100"},
+            {"port":2201,"value":"0"},
+            {"port":2202,"value":"10"},
+            {"port":2203,"value":"100"},
+            {"port":2401,"value":"1"},
+        ]                                                                                          }
+
+    setTimeout(function () {
+        airBoxDetail(JSON.stringify(data))
+    },1000)
+
+    setTimeout(function () {
+        airBoxDetail(JSON.stringify(data2))
+    },4000)
+
+
+    setTimeout(function () {
+        airBoxDetail(JSON.stringify(data3))
+    },8000)
+
+
+    setTimeout(function () {
+        airBoxDetail(JSON.stringify(data4))
+    },12000)
+
+
+    condition(2);
+</script>
+</body>
+</html>
+
+

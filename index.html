@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>排污泵演示板</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+ <div class="leftTop"></div>
+ <div class="rightBottom"></div>
+
+     <div class="banner">
+         <div class="enterArrow"></div>
+         <div class="outArrow"></div>
+         <div class="outArrow2"></div>
+         <div class="outArrow3_box">
+             <div class="outArrow3"></div>
+             <div class="outArrow4"></div>
+         </div>
+     </div>
+
+     <div class="pipe"></div>
+     <div class="pipe-dibu"></div>
+     <div class="pumpLeft"></div>
+     <div class="pumpRight"></div>
+     <div class="enter"></div>
+
+     <div class="container">
+         <div class="ripple"></div>
+         <div class="water_box">
+             <div class="out"></div>
+             <div class="inner"></div>
+         </div>
+     </div>
+
+     <div class="maskBox">
+         <div class="mask"></div>
+     </div>
+
+     <div class="Notice_box">
+         <div class="Notice"></div>
+         <div class="Notice_tex">高液位：副泵开</div>
+     </div>
+
+     <div class="zhu_state_box">
+         <div class="state"></div>
+         <div class="state_text">主泵开</div>
+     </div>
+
+     <div class="bei_state_box">
+         <div class="state"></div>
+         <div class="state_text">备泵开</div>
+     </div>
+
+ <script>
+     /*进水     3个单位
+       单泵出水  2个单位
+     *
+     * 最高水位线 30个单位
+     * 最低水位线 6个单位
+     *
+     * */
+     var box=document.querySelector('.container');//水箱
+     var pool=document.querySelector('.water_box');//水位
+     var ripple=document.querySelector('.ripple');//波浪
+     var mask=document.querySelector('.mask'); //遮罩
+
+     var pipe=document.querySelector('.pipe');//管子
+     var enter=document.querySelector('.enter');//进水
+
+     var Notice_box=document.querySelector(".Notice_box")//告警箱子
+     var Notice=document.querySelector('.Notice')//红灯
+     var Notice_tex=document.querySelector('.Notice_tex');//告警文字信息
+
+     var zhu_state_box=document.querySelector('.zhu_state_box');//主泵状态
+     var bei_state_box=document.querySelector('.bei_state_box');//备泵状态
+     var state_text=document.querySelectorAll('.state_text');//状态文字
+
+
+     var left=document.querySelector('.pumpLeft');//左边的泵
+     var right=document.querySelector('.pumpRight');//右边的泵
+
+     var enterArrow=document.querySelector('.enterArrow');//进水箭头
+     var outArrow=document.querySelector('.outArrow');//出水箭头
+     var outArrow2=document.querySelector('.outArrow2');//出水箭头2
+     var outArrow3_box=document.querySelector('.outArrow3_box');//出水箭头3
+     var outArrow3=document.querySelector('.outArrow3');//出水箭头3
+
+
+      /*告警文字大小*/
+      Notice_tex.style.fontSize=(box.offsetHeight*0.05)+'px';
+      /*状态文字大小*/
+      for (var i=0;i<state_text.length;i++){
+          state_text[i].style.fontSize=(box.offsetHeight*0.05)+'px';
+      }
+
+     /*单位高度*/
+     var company=box.offsetHeight/30;
+     /*波浪高度*/
+     var rheight=ripple.offsetHeight;
+
+     /*水位向下平移波浪的高度*/
+     pool.style.transform='translateY('+(rheight-0.3)+'px)';
+     /*波浪向下平移自身高度*/
+     ripple.style.transform='translateY('+(rheight)+'px)';
+     /*遮罩向下平移自身高度*/
+     mask.style.transform='translateY('+(rheight)+'px)';
+
+     /*控制水位的函数*/
+     function poolHeight(h) {
+
+          var time='3s';
+         //规定水位过渡属性 height
+         pool.style.transitionProperty='height';
+         //规定过渡时间 1s
+         pool.style.transitionDuration=time;
+         //规定水位过渡函数
+         pool.style.transitionTimingFunction='linear';
+
+         //规定波浪的过渡属性 bottom
+         ripple.style.transitionProperty='bottom';
+         //规定过渡时间 1s
+         ripple.style.transitionDuration=time;
+         //规定波浪过渡函数
+         ripple.style.transitionTimingFunction='linear';
+
+         //规定遮罩的过渡属性 height
+         mask.style.transitionProperty='height';
+         //规定遮罩的过渡时间 1s
+         mask.style.transitionDuration=time;
+         //规定遮罩过渡函数
+         mask.style.transitionTimingFunction='linear';
+
+         //规定水位高度变化结果
+         pool.style.height=h*company+'px';
+         //规定波浪bottom变化结果
+         ripple.style.bottom=(h*company)+'px';
+         //规定遮罩的变化结果
+         mask.style.height=(h*company+ripple.offsetHeight*0.7)+'px';
+
+         setTimeout(function () {
+             if(h<=6.0){
+                 Notice_box.style.opacity=1;
+                 Notice_tex.innerHTML='低告警液位';
+             }else if(h>=27){
+                 Notice_box.style.opacity=1;
+                 Notice_tex.innerHTML='高告警液位';
+             }else{
+                 Notice_box.style.opacity=0;
+             }
+         },3000)
+
+     }
+
+     /*判断泵的工作个数  从而控制水管的动画状态*/
+     var pump_one='c';
+     var pump_two='c';
+     function pipeNum(json) {
+
+         if(json.port==1201){
+             if(json.state){
+                 pump_one='k';
+             }else{
+                 pump_one='c';
+             }
+         }
+
+         if(json.port==1202){
+             if(json.state){
+                 pump_two='k';
+             }else{
+                 pump_two='c';
+             }
+         }
+
+         if(pump_one=='k'&&pump_two=='k'){
+             pipe.style.backgroundImage='url(images/deblePipe_work.gif)';
+             outArrow.style.animation=' outArrow 1s infinite linear ';
+             outArrow2.style.animation=' outArrow2 1s infinite linear ';
+             outArrow3_box.style.animation=' outArrow3 1s infinite linear ';
+             outArrow3.style.opacity=1;
+
+         }
+         if(pump_one=='k'&&pump_two=='c'){
+             pipe.style.backgroundImage='url(images/pipeLeft_work.gif)';
+             outArrow.style.animation=' outArrow 1s infinite linear ';
+             outArrow2.style.animation=' outArrow2 1s infinite linear ';
+             outArrow3_box.style.animation=' outArrow3 1s infinite linear ';
+             outArrow3.style.opacity=0;
+         }
+         if(pump_one=='c'&&pump_two=='k'){
+             pipe.style.backgroundImage='url(images/pipeRight_work.gif)';
+             outArrow.style.animation=' outArrow 1s infinite linear ';
+             outArrow2.style.animation=' outArrow2 1s infinite linear ';
+             outArrow3_box.style.animation=' outArrow3 1s infinite linear ';
+             outArrow3.style.opacity=0;
+         }
+
+         if(pump_one=='c'&&pump_two=='c'){
+             pipe.style.backgroundImage='url(images/pipe.png)';
+             outArrow.style.animation=' none ';
+             outArrow2.style.animation=' none ';
+             outArrow3_box.style.animation=' none ';
+             outArrow3.style.opacity=0;
+         }
+     }
+
+     /*泵启停函数*/
+     function boxActFlash  (json1) {
+         var json=JSON.parse(json1);
+         /*主泵启停*/
+         if(json.port==1201) {
+             if(json.state=='1' ){
+
+                 left.style.backgroundImage='url(images/pumpWork.gif)';
+                 zhu_state_box.style.display='block';
+             }
+
+             if(json.state=='0' ){
+                 left.style.backgroundImage='url(images/pump.png)';
+                 zhu_state_box.style.display='none';
+             }
+
+             pipeNum(json);
+         }
+
+         /*副泵启停*/
+         if(json.port==1202) {
+             if(json.state=='1'){
+                right.style.backgroundImage='url(images/pumpWork.gif)';
+                bei_state_box.style.display='block';
+
+             }
+
+             if(json.state=='0' ){
+                 right.style.backgroundImage='url(images/pump.png)';
+                 bei_state_box.style.display='none';
+             }
+
+             pipeNum(json);
+         }
+
+         /*污水开关*/
+         if(json.port==1203) {
+             if(json.state){
+                 enter.style.animation='enter 1.2s infinite linear';
+                 enterArrow.style.animation='enterArrow 1.5s infinite  linear';
+             }else{
+                 enter.style.animation='none';
+                 enterArrow.style.animation='none';
+             }
+
+         }
+     }
+
+
+ </script>
+
+ <script>
+
+     poolHeight(27);
+
+     setTimeout(function () {
+         var a={port:1203,state:1};
+         boxActFlash(JSON.stringify(a));
+     },2000)
+
+     setTimeout(function () {
+         var a={port:1201,state:1};
+         boxActFlash(JSON.stringify(a));
+     },2000)
+
+     setTimeout(function () {
+         var a={port:1202,state:1};
+         boxActFlash(JSON.stringify(a));
+     },5000)
+
+     setTimeout(function () {
+         var a={port:1201,state:0};
+         boxActFlash(JSON.stringify(a));
+     },8000)
+
+     setTimeout(function () {
+         var a={port:1202,state:0};
+         boxActFlash(JSON.stringify(a));
+     },12000)
+
+     setTimeout(function () {
+         var a={port:1201,state:1};
+         boxActFlash(JSON.stringify(a));
+     },15000)
+
+     setTimeout(function () {
+         var a={port:1202,state:1};
+         boxActFlash(JSON.stringify(a));
+     },18000)
+
+
+ </script>
+
+</body>
+</html>
